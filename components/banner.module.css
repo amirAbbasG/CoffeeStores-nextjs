@@ -1,0 +1,113 @@
+.container {
+  margin-bottom: 1rem;
+}
+
+.title {
+  letter-spacing: -0.025em;
+  font-weight: 800;
+  font-size: 3rem;
+  color: black;
+  line-height: 1;
+}
+
+.title1 {
+  color: white;
+}
+
+.title2 {
+  color: var(--primary);
+  display: block;
+}
+
+.subTitle {
+  margin-top: 0.75rem;
+  font-size: 1.5rem /* 24px */;
+  line-height: 2rem /* 32px */;
+}
+
+.button {
+  background-color: var(--secondary);
+  cursor: pointer;
+  color: white;
+  outline: 0;
+  border: 0px;
+  padding: 1rem 2.4rem;
+  border-radius: 1rem;
+  font-size: 1.1rem;
+  line-height: 1.75rem;
+}
+.buttonWrapper {
+  margin-top: 1.25rem;
+}
+
+.button:hover {
+  background-color: var(--primary);
+}
+
+/** sm breakpoint **/
+@media (min-width: 640px) {
+  .title {
+    font-size: 3rem /* 48px */;
+    line-height: 1;
+  }
+
+  .subTitle {
+    margin-top: 1.25rem;
+    max-width: 36rem;
+  }
+
+  .buttonWrapper {
+    display: flex;
+    margin-top: 2rem;
+  }
+}
+
+/** md breakpoint **/
+@media (min-width: 768px) {
+  .title {
+    font-size: 3.75rem /* 60px */;
+    line-height: 1;
+  }
+
+  .subTitle {
+    margin-top: 1.25rem;
+  }
+
+  .button {
+    padding: 1rem 2.4rem;
+    font-size: 1.1rem;
+    line-height: 1.75rem;
+  }
+}
+
+/** lg breakpoint **/
+@media (min-width: 1024px) {
+  .container {
+    text-align: left;
+  }
+
+  .title {
+    font-size: 4.5rem /* 72px */;
+    line-height: 1;
+  }
+
+  .title2 {
+    padding-left: 0.5rem;
+  }
+
+  .subTitle {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .buttonWrapper {
+    justify-content: flex-start;
+  }
+}
+
+/** xl breakpoint **/
+@media (min-width: 1280px) {
+  .title2 {
+    display: inline;
+  }
+}
