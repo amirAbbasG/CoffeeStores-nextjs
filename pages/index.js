@@ -22,7 +22,7 @@ export default function Home() {
           buttonClick={handleBannerButtonClick}
         />
         <div className={styles.heroImage}>
-          <Image src="/static/test1.jpg" width={700} height={400} />
+          <Image src="/static/heroImage.png" width={200} height={200} />
         </div>
       </main>
     </div>
