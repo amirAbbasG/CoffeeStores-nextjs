@@ -60,6 +60,7 @@
   flex-direction: column;
   margin-left: 0.5rem /* 8px */;
   align-self: center;
+  place-self: center;
   margin-top: 4rem /* 64px */;
   color: rgba(55, 59, 100, 1);
 }
