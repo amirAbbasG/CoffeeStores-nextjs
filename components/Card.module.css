@@ -1,0 +1,63 @@
+.cardLink{
+    margin: auto;
+    --tw-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 0 transparent, 0 0 #0000, 0 0 transparent, 0 0 #0000, 0 0 transparent;
+
+    border-color: white;
+    border-radius: 0.50rem;
+    cursor: pointer;
+}
+
+.cardLink:hover{
+    background-position: 0 0, 0 0;
+  
+  -webkit-transition-duration: 0.5s;
+     -moz-transition-duration: 0.5s;
+          transition-duration: 0.5s;
+}
+
+.container{
+    padding: 0.25rem 1rem;
+    border-radius: 0.50rem;
+    backdrop-filter: blur(10px);
+}
+
+
+.image{
+    border-radius: 0.50rem;
+}
+
+.imageBox{
+    color: white;
+    display: flex;
+    padding: 17px 7px;
+    align-items: center;
+    justify-content: center;
+}
+
+.header{
+    text-overflow: ellipsis;
+    font-weight: 800;
+    overflow: hidden;
+    font-size: 1.25rem;
+    white-space: nowrap;
+    width: 16rem;
+}
+
+.headerBox{
+    padding: 7px;
+}
+
+@media(min-widt: 1024px){
+    .header{
+        width: 16rem;
+    }
+}
+
+@media(min-widt: 768px){
+    .header{
+        width: 16rem;
+    }
+}
+
