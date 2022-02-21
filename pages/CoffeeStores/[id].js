@@ -46,7 +46,7 @@ const CoffeeStores = ({ coffeeStore }) => {
   const { address, name, neighbourhood, imgUrl } = coffeeStore;
 
   return (
-    <div>
+    <div className={styles.layout}>
       <Head>
         <title>{name}</title>
       </Head>
@@ -58,7 +58,13 @@ const CoffeeStores = ({ coffeeStore }) => {
             </Link>
           </div>
           <h1 className={styles.name}>{name}</h1>
-          <Image src={imgUrl} width={600} height={450} alt={name} />
+          <Image
+            className={styles.storeImg}
+            src={imgUrl}
+            width={600}
+            height={450}
+            alt={name}
+          />
         </div>
         <div className={classnames("glass", styles.col2)}>
           <div className={styles.iconWrapper}>
@@ -66,12 +72,7 @@ const CoffeeStores = ({ coffeeStore }) => {
             <p className={styles.text}>{address}</p>
           </div>
           <div className={styles.iconWrapper}>
-            <Image
-              className={styles.storeImg}
-              src="/static/icons/nearMe.svg"
-              width={24}
-              height={24}
-            />
+            <Image src="/static/icons/nearMe.svg" width={24} height={24} />
             <p className={styles.text}>{neighbourhood}</p>
           </div>
           <div className={styles.iconWrapper}>
