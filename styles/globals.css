@@ -2,8 +2,8 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: LobsterTwo, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: LobsterTwo, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   background: url("/static/background.png");
   background-repeat: no-repeat;
   background-size: cover;
@@ -19,13 +19,17 @@ a {
 * {
   box-sizing: border-box;
 }
-.glass{
-  background: rgba( 255, 255, 255, 0.3 );
-box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-backdrop-filter: blur( 10.5px );
--webkit-backdrop-filter: blur( 10.5px );
-border-radius: 10px;
-border: 1px solid rgba( 255, 255, 255, 0.18 );
+.glass {
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(10.5px);
+  -webkit-backdrop-filter: blur(10.5px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+.glass:hover {
+  background: hsla(0, 0%, 100%, 0.7);
+  border: 1px solid #fff;
 }
 
 h1,
@@ -59,7 +63,6 @@ button:focus {
   --error: rgb(243, 12, 12);
 }
 
-
 @font-face {
   font-family: "LobsterTwo";
   src: url("/fonts/LobsterTwo-Regular.ttf");
@@ -73,5 +76,4 @@ button:focus {
   font-style: medium;
   font-weight: bold;
   font-display: swap;
-
 }

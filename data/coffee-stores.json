@@ -16,9 +16,17 @@
     "neighbourhood": "Richmond and Spadina"
   },
   {
-    "id": 300,
-    "name": "Route 300",
+    "id": 3,
+    "name": "Coffee Classic",
     "imgUrl": "https://rusticiran.com/wp-content/uploads/2018/02/14-%D8%B9%DA%A9%D8%B3-%D8%A8%D8%B1%D8%A7%DB%8C-%DA%A9%D8%A7%D9%81%DB%8C-%D8%B4%D8%A7%D9%BE-%DA%86%D9%88%D8%A8%DB%8C-10.jpg",
+    "websiteUrl": "https://www.darkhorseespresso.com/",
+    "address": "401 Richmond St W",
+    "neighbourhood": "Route 300 Neighbourhood"
+  },
+  {
+    "id": 4,
+    "name": "Hot Coffe",
+    "imgUrl": "https://rusticiran.com/wp-content/uploads/2018/02/14-%D8%B9%DA%A9%D8%B3-%D8%A8%D8%B1%D8%A7%DB%8C-%DA%A9%D8%A7%D9%81%DB%8C-%D8%B4%D8%A7%D9%BE-%DA%86%D9%88%D8%A8%DB%8C-8.jpg",
     "websiteUrl": "https://www.darkhorseespresso.com/",
     "address": "401 Richmond St W",
     "neighbourhood": "Route 300 Neighbourhood"
