@@ -4,21 +4,21 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import classnames from "classnames";
 
-import coffeeStoresData from "../../data/coffee-stores.json";
+import { fetchCoffeeStores } from "../../lib/coffeeStores";
 import styles from "../../styles/CoffeeStore.module.css";
 
 export async function getStaticProps({ params }) {
+  const coffeeStores = await fetchCoffeeStores();
   return {
     props: {
-      coffeeStore: coffeeStoresData.find(
-        (cs) => cs.id.toString() === params.id
-      ),
+      coffeeStore: coffeeStores.find((cs) => cs.id.toString() === params.id),
     },
   };
 }
 
 export async function getStaticPaths() {
-  const paths = coffeeStoresData.map((cs) => {
+  const coffeeStores = await fetchCoffeeStores();
+  const paths = coffeeStores.map((cs) => {
     return {
       params: {
         id: cs.id.toString(),
@@ -37,7 +37,6 @@ const handleUpVote = () => {
 
 const CoffeeStores = ({ coffeeStore }) => {
   const router = useRouter();
-  const { id } = router.query;
 
   if (router.isFallback) {
     return <div>loading...</div>;
@@ -54,7 +53,7 @@ const CoffeeStores = ({ coffeeStore }) => {
         <div className={styles.col1}>
           <div className={styles.backToHomeLink}>
             <Link href="/">
-              <a>Go back home</a>
+              <a>← Go back home</a>
             </Link>
           </div>
           <h1 className={styles.name}>{name}</h1>
@@ -71,10 +70,12 @@ const CoffeeStores = ({ coffeeStore }) => {
             <Image src="/static/icons/places.svg" width={24} height={24} />
             <p className={styles.text}>{address}</p>
           </div>
-          <div className={styles.iconWrapper}>
-            <Image src="/static/icons/nearMe.svg" width={24} height={24} />
-            <p className={styles.text}>{neighbourhood}</p>
-          </div>
+          {neighbourhood && (
+            <div className={styles.iconWrapper}>
+              <Image src="/static/icons/nearMe.svg" width={24} height={24} />
+              <p className={styles.text}>{neighbourhood}</p>
+            </div>
+          )}
           <div className={styles.iconWrapper}>
             <Image src="/static/icons/star.svg" width={24} height={24} />
             <p className={styles.text}>1</p>

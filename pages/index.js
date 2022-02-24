@@ -4,7 +4,6 @@ import styles from "../styles/Home.module.css";
 
 import Banner from "../components/Banner";
 import Card from "../components/Card";
-import coffeeStoresData from "../data/coffee-stores.json";
 import { fetchCoffeeStores } from "../lib/coffeeStores";
 
 export async function getStaticProps(context) {
@@ -46,10 +45,7 @@ export default function Home({ coffeeStores }) {
                   name={cs.name}
                   href={`/CoffeeStores/${cs.id}`}
                   key={cs.Id}
-                  imageUrl={
-                    cs.imgUrl ||
-                    "https://rusticiran.com/wp-content/uploads/2018/02/14-%D8%B9%DA%A9%D8%B3-%D8%A8%D8%B1%D8%A7%DB%8C-%DA%A9%D8%A7%D9%81%DB%8C-%D8%B4%D8%A7%D9%BE-%DA%86%D9%88%D8%A8%DB%8C-9.jpg"
-                  }
+                  imageUrl={cs.imgUrl}
                   className={styles.card}
                 />
               ))}
