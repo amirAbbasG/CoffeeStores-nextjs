@@ -1,3 +1,4 @@
+import { useContext, useEffect, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
@@ -6,12 +7,18 @@ import classnames from "classnames";
 
 import { fetchCoffeeStores } from "../../lib/coffeeStores";
 import styles from "../../styles/CoffeeStore.module.css";
+import { isEmpty } from "../../utils";
+import { StoreContext } from "../../store/StoreContext";
 
 export async function getStaticProps({ params }) {
   const coffeeStores = await fetchCoffeeStores();
+  const findCoffeeStore = coffeeStores.find(
+    (cs) => cs.id.toString() === params.id
+  );
+
   return {
     props: {
-      coffeeStore: coffeeStores.find((cs) => cs.id.toString() === params.id),
+      coffeeStore: findCoffeeStore || {},
     },
   };
 }
@@ -37,12 +44,57 @@ const handleUpVote = () => {
 
 const CoffeeStores = ({ coffeeStore }) => {
   const router = useRouter();
+  const { id } = router.query;
+  const [cofeeStoreData, setCofeeStoreData] = useState(coffeeStore || {});
+
+  const {
+    state: { coffeeStores },
+  } = useContext(StoreContext);
 
   if (router.isFallback) {
     return <div>loading...</div>;
   }
 
-  const { address, name, neighbourhood, imgUrl } = coffeeStore;
+  const handleCreateCoffeeStore = async (coffeeStore) => {
+    const { id, name, voting, address, neighbourhood, imgUrl } = coffeeStore;
+    try {
+      const respons = await fetch("/api/createCoffeeStore", {
+        method: "Post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id,
+          name,
+          voting: 0,
+          imgUrl,
+          neighbourhood: neighbourhood || "",
+          address: address || "",
+        }),
+      });
+
+      const dbCoffeeStore = await respons.json();
+      console.log(dbCoffeeStore);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (isEmpty(coffeeStore)) {
+      if (coffeeStores.length > 0) {
+        const targetCoffeeStore = coffeeStores.find((c) => c.id === id);
+        if (targetCoffeeStore) {
+          setCofeeStoreData(targetCoffeeStore);
+          handleCreateCoffeeStore(targetCoffeeStore);
+        }
+      }
+    } else {
+      handleCreateCoffeeStore(coffeeStore);
+    }
+  }, [id, coffeeStore]);
+
+  const { address, name, neighbourhood, imgUrl } = cofeeStoreData;
 
   return (
     <div className={styles.layout}>
@@ -59,7 +111,10 @@ const CoffeeStores = ({ coffeeStore }) => {
           <h1 className={styles.name}>{name}</h1>
           <Image
             className={styles.storeImg}
-            src={imgUrl}
+            src={
+              imgUrl ||
+              "https://rusticiran.com/wp-content/uploads/2018/02/14-%D8%B9%DA%A9%D8%B3-%D8%A8%D8%B1%D8%A7%DB%8C-%DA%A9%D8%A7%D9%81%DB%8C-%D8%B4%D8%A7%D9%BE-%DA%86%D9%88%D8%A8%DB%8C-9.jpg"
+            }
             width={600}
             height={450}
             alt={name}
