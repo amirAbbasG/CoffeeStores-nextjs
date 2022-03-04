@@ -49,10 +49,6 @@ const CoffeeStores = ({ coffeeStore }) => {
     state: { coffeeStores },
   } = useContext(StoreContext);
 
-  if (router.isFallback) {
-    return <div>loading...</div>;
-  }
-
   const handleUpVote = async () => {
     try {
       const response = await fetch("/api/upVotingCoffeeStoreById", {
@@ -93,9 +89,6 @@ const CoffeeStores = ({ coffeeStore }) => {
           address: address || "",
         }),
       });
-
-      const dbCoffeeStore = await respons.json();
-      console.log(dbCoffeeStore);
     } catch (error) {
       console.error(error);
     }
@@ -113,23 +106,25 @@ const CoffeeStores = ({ coffeeStore }) => {
     } else {
       handleCreateCoffeeStore(coffeeStore);
     }
-  }, [id, coffeeStore]);
+  }, [id, coffeeStore, coffeeStores]);
 
   const { data, error } = useSWR(`/api/getCoffeeStoreById?id=${id}`);
 
   useEffect(() => {
     if (data && data.length > 0) {
       setCofeeStoreData(data[0]);
-
       setVotingCount(data[0].voting);
     }
   }, [data]);
+
+  if (router.isFallback) {
+    return <div>loading...</div>;
+  }
 
   if (error) {
     return <div>Something went wrong retrieving coffee store page</div>;
   }
 
-  (" 1032247890");
   const { address, name, neighbourhood, imgUrl } = cofeeStoreData;
 
   return (
@@ -158,17 +153,32 @@ const CoffeeStores = ({ coffeeStore }) => {
         </div>
         <div className={classnames("glass", styles.col2)}>
           <div className={styles.iconWrapper}>
-            <Image src="/static/icons/places.svg" width={24} height={24} />
+            <Image
+              src="/static/icons/places.svg"
+              alt="location"
+              width={24}
+              height={24}
+            />
             <p className={styles.text}>{address}</p>
           </div>
           {neighbourhood && (
             <div className={styles.iconWrapper}>
-              <Image src="/static/icons/nearMe.svg" width={24} height={24} />
+              <Image
+                src="/static/icons/nearMe.svg"
+                alt="nearMe"
+                width={24}
+                height={24}
+              />
               <p className={styles.text}>{neighbourhood}</p>
             </div>
           )}
           <div className={styles.iconWrapper}>
-            <Image src="/static/icons/star.svg" width={24} height={24} />
+            <Image
+              src="/static/icons/star.svg"
+              alt="rating"
+              width={24}
+              height={24}
+            />
             <p className={styles.text}>{votingCount}</p>
           </div>
           <button className={styles.upvoteButton} onClick={handleUpVote}>

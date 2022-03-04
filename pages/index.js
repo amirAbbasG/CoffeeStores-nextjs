@@ -68,7 +68,12 @@ export default function Home({ coffeeStores }) {
           <p>{`somthing went wrong : ${coffeeStoresError}`}</p>
         )}
         <div className={styles.heroImage}>
-          <Image src="/static/heroImage.png" width={200} height={200} />
+          <Image
+            src="/static/heroImage.png"
+            width={200}
+            height={200}
+            alt="coffee image"
+          />
         </div>
         {state.coffeeStores.length > 0 && (
           <>
