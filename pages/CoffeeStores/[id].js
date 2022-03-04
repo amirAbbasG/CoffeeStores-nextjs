@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import classnames from "classnames";
+import useSWR from "swr";
 
 import { fetchCoffeeStores } from "../../lib/coffeeStores";
 import styles from "../../styles/CoffeeStore.module.css";
@@ -38,14 +39,11 @@ export async function getStaticPaths() {
   };
 }
 
-const handleUpVote = () => {
-  console.log("hp vote");
-};
-
 const CoffeeStores = ({ coffeeStore }) => {
   const router = useRouter();
   const { id } = router.query;
   const [cofeeStoreData, setCofeeStoreData] = useState(coffeeStore || {});
+  const [votingCount, setVotingCount] = useState(0);
 
   const {
     state: { coffeeStores },
@@ -54,6 +52,29 @@ const CoffeeStores = ({ coffeeStore }) => {
   if (router.isFallback) {
     return <div>loading...</div>;
   }
+
+  const handleUpVote = async () => {
+    try {
+      const response = await fetch("/api/upVotingCoffeeStoreById", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id,
+        }),
+      });
+
+      const dbCoffeeStore = await response.json();
+
+      if (dbCoffeeStore && dbCoffeeStore.length > 0) {
+        let count = votingCount + 1;
+        setVotingCount(count);
+      }
+    } catch (err) {
+      console.error("Error upvoting the coffee store", err);
+    }
+  };
 
   const handleCreateCoffeeStore = async (coffeeStore) => {
     const { id, name, voting, address, neighbourhood, imgUrl } = coffeeStore;
@@ -94,6 +115,21 @@ const CoffeeStores = ({ coffeeStore }) => {
     }
   }, [id, coffeeStore]);
 
+  const { data, error } = useSWR(`/api/getCoffeeStoreById?id=${id}`);
+
+  useEffect(() => {
+    if (data && data.length > 0) {
+      setCofeeStoreData(data[0]);
+
+      setVotingCount(data[0].voting);
+    }
+  }, [data]);
+
+  if (error) {
+    return <div>Something went wrong retrieving coffee store page</div>;
+  }
+
+  (" 1032247890");
   const { address, name, neighbourhood, imgUrl } = cofeeStoreData;
 
   return (
@@ -133,7 +169,7 @@ const CoffeeStores = ({ coffeeStore }) => {
           )}
           <div className={styles.iconWrapper}>
             <Image src="/static/icons/star.svg" width={24} height={24} />
-            <p className={styles.text}>1</p>
+            <p className={styles.text}>{votingCount}</p>
           </div>
           <button className={styles.upvoteButton} onClick={handleUpVote}>
             Up vote
