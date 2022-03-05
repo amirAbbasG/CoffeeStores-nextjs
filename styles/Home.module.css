@@ -13,7 +13,7 @@
 
 .heroImage {
   position: absolute;
-  top: 4rem;
+  top: 2rem;
   z-index: 1;
   right: 0;
 }
@@ -70,6 +70,10 @@
   .container {
     padding-left: 2.5rem /* 40px */;
     padding-right: 2.5rem /* 40px */;
+  }
+
+  .heroImage {
+    top: 4rem;
   }
 
   .main {
