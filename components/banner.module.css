@@ -53,6 +53,7 @@
 
   .subTitle {
     margin-top: 1.25rem;
+    font-size: 1.2rem;
     max-width: 36rem;
   }
 
@@ -71,6 +72,7 @@
 
   .subTitle {
     margin-top: 1.5rem;
+    font-size: 1.4rem;
   }
 
   .button {
