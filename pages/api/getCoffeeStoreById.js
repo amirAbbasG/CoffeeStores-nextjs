@@ -4,7 +4,7 @@ const getCoffeeStoreById = async (req, res) => {
   const { id } = req.query;
   try {
     if (id) {
-      const findCoffeeStore = getRecordById(id);
+      const findCoffeeStore = await getRecordById(id);
       if (findCoffeeStore.length > 0) {
         res.json(findCoffeeStore);
       } else {
