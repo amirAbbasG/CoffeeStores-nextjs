@@ -25,7 +25,6 @@ const upVotingCoffeeStoreById = async (req, res) => {
           } else {
             res.status(400).json({ message: "update faild" });
           }
-          res.json(records);
         } else {
           res.status(404).json({
             message: "Coffee store dose not exist with this id : ",
