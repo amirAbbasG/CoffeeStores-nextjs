@@ -70,8 +70,8 @@ export default function Home({ coffeeStores }) {
         <div className={styles.heroImage}>
           <Image
             src="/static/heroImage.png"
-            width={180}
-            height={180}
+            width={170}
+            height={170}
             alt="coffee image"
           />
         </div>
