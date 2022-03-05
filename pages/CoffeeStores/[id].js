@@ -8,7 +8,7 @@ import useSWR from "swr";
 
 import { fetchCoffeeStores } from "../../lib/coffeeStores";
 import styles from "../../styles/CoffeeStore.module.css";
-import { isEmpty } from "../../utils";
+import { isEmpty, fetcher } from "../../utils";
 import { StoreContext } from "../../store/StoreContext";
 
 export async function getStaticProps({ params }) {
@@ -49,33 +49,10 @@ const CoffeeStores = ({ coffeeStore }) => {
     state: { coffeeStores },
   } = useContext(StoreContext);
 
-  const handleUpVote = async () => {
-    try {
-      const response = await fetch("/api/upVotingCoffeeStoreById", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id,
-        }),
-      });
-
-      const dbCoffeeStore = await response.json();
-      console.log(dbCoffeeStore);
-      if (dbCoffeeStore && dbCoffeeStore.length > 0) {
-        let count = votingCount + 1;
-        setVotingCount(count);
-      }
-    } catch (err) {
-      console.error("Error upvoting the coffee store", err);
-    }
-  };
-
   const handleCreateCoffeeStore = async (coffeeStore) => {
-    const { id, name, voting, address, neighbourhood, imgUrl } = coffeeStore;
+    const { id, name, address, neighbourhood, imgUrl } = coffeeStore;
     try {
-      const respons = await fetch("/api/createCoffeeStore", {
+      const response = await fetch("/api/createCoffeeStore", {
         method: "Post",
         headers: {
           "Content-Type": "application/json",
@@ -89,6 +66,7 @@ const CoffeeStores = ({ coffeeStore }) => {
           address: address || "",
         }),
       });
+      const dbCoffeeStore = await response.json();
     } catch (error) {
       console.error(error);
     }
@@ -97,7 +75,9 @@ const CoffeeStores = ({ coffeeStore }) => {
   useEffect(() => {
     if (isEmpty(coffeeStore)) {
       if (coffeeStores.length > 0) {
-        const targetCoffeeStore = coffeeStores.find((c) => c.id === id);
+        const targetCoffeeStore = coffeeStores.find(
+          (c) => c.id.toString() === id
+        );
         if (targetCoffeeStore) {
           setCofeeStoreData(targetCoffeeStore);
           handleCreateCoffeeStore(targetCoffeeStore);
@@ -108,8 +88,7 @@ const CoffeeStores = ({ coffeeStore }) => {
     }
   }, [id, coffeeStore, coffeeStores]);
 
-  const { data, error } = useSWR(`/api/getCoffeeStoreById?id=${id}`);
-  console.log(data);
+  const { data, error } = useSWR(`/api/getCoffeeStoreById?id=${id}`, fetcher);
 
   useEffect(() => {
     if (data && data.length > 0) {
@@ -117,6 +96,28 @@ const CoffeeStores = ({ coffeeStore }) => {
       setVotingCount(data[0].voting);
     }
   }, [data]);
+
+  const handleUpVote = async () => {
+    try {
+      const response = await fetch("/api/upVotingCoffeeStoreById", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id,
+        }),
+      });
+
+      const dbCoffeeStore = await response.json();
+      if (dbCoffeeStore && dbCoffeeStore.length > 0) {
+        let count = votingCount + 1;
+        setVotingCount(count);
+      }
+    } catch (err) {
+      console.error("Error upvoting the coffee store", err);
+    }
+  };
 
   if (router.isFallback) {
     return <div>loading...</div>;

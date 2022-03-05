@@ -1,8 +1,8 @@
 import { getRecordById } from "../../lib/airtable";
 
 const getCoffeeStoreById = async (req, res) => {
+  const { id } = req.query;
   try {
-    const { id } = req.query;
     if (id) {
       const findCoffeeStore = getRecordById(id);
       if (findCoffeeStore.length > 0) {
