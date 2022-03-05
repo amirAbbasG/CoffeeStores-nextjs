@@ -62,7 +62,7 @@ const CoffeeStores = ({ coffeeStore }) => {
       });
 
       const dbCoffeeStore = await response.json();
-
+      console.log(dbCoffeeStore);
       if (dbCoffeeStore && dbCoffeeStore.length > 0) {
         let count = votingCount + 1;
         setVotingCount(count);
@@ -109,6 +109,7 @@ const CoffeeStores = ({ coffeeStore }) => {
   }, [id, coffeeStore, coffeeStores]);
 
   const { data, error } = useSWR(`/api/getCoffeeStoreById?id=${id}`);
+  console.log(data);
 
   useEffect(() => {
     if (data && data.length > 0) {
